@@ -9,7 +9,7 @@
   <style>
     html {
       box-sizing: border-box;
-      background: #ffc600;
+      /* background: #00ff7b; */
       font-family: 'helvetica neue';
       font-size: 20px;
       font-weight: 200;
@@ -26,6 +26,8 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
+      cursor: pointer;
     }
 
     .panel {
@@ -37,12 +39,16 @@
       /* Safari transitionend event.propertyName === flex */
       /* Chrome + FF transitionend event.propertyName === flex-grow */
       transition:
-        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
-        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        font-size 0.2s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.2s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         background 0.2s;
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -55,7 +61,24 @@
     .panel > * {
       margin: 0;
       width: 100%;
-      transition: transform 0.5s;
+      transition: transform 0.2s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > :first-child {
+        transform: translateY(-100%);
+    }
+    .panel.unhide > :first-child {
+        transform: translateY(0);
+    }
+    .panel > :last-child {
+        transform: translateY(100%);
+    }
+    .panel.unhide > :last-child {
+        transform: translateY(0);
     }
 
     .panel p {
@@ -71,6 +94,10 @@
 
     .panel.open {
       font-size: 40px;
+      flex: 5;
+      border: 5px solid darkgreen;
+      border-radius: 20px;
+      background-color: transparent;
     }
 
   </style>
@@ -105,7 +132,22 @@
   </div>
 
   <script>
+    // function reset() {
+    //     panels.forEach(panel => panel.classList.remove('open'))
+    // }
 
+    function open() {
+        // reset()
+        this.classList.toggle('open')
+    }
+
+    function unhide() {
+        this.classList.toggle('unhide')
+    }
+
+    const panels = document.querySelectorAll('.panel')
+    panels.forEach(panel => panel.addEventListener('click', open))
+    panels.forEach(panel => panel.addEventListener('transitionend', unhide))
   </script>
 
 
