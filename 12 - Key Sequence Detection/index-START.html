@@ -3,10 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
-  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
 <script>
+    let sequence = []
+    const secret = 'ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightbaEnter'
+   
+
+    function keyup(e) {
+        sequence.push(e.key)
+        
+        console.log(sequence)
+        if (sequence.join('').includes(secret)) {
+            sequence = []
+        }
+    }
+    window.addEventListener('keyup', keyup)
 </script>
 </body>
 </html>
